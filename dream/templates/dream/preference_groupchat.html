@@ -1,0 +1,138 @@
+{% extends "dream/base.html" %}
+
+<!--
+<main class="container">
+    <h2>{{ room_name }}</h2>
+    {% for message in messages %}
+    {% if message.username == current_user.username %}
+    <div class="d-flex justify-content-end"><p class="p-2 bg-success rounded">{{ message.body }}</p></div>
+    {% else %}
+    <div class="d-flex justify-content-start"><p class="p-2 bg-light rounded">{{ message.username }}</p><p class="p-2 rounded">:</p><p class="p-2 bg-white rounded">{{ message.body }}</p></div>
+    {% endif %}
+    {% endfor %}
+    <form method="POST">{% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+            {{ form.message }}
+
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            {{ form.message }}
+            <div class="py-3">
+              <input id="message" name="message" required="required" class="input-gray" aria-autocomplete="list">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</main>
+<script>
+  var body = document.getElementsByTagName("body");
+  body[0].classList.add("bg-info");
+  var textarea = document.getElementById("message");
+  textarea.innerHTML = "";
+</script>
+-->
+{% block content %}
+<div class="center-content">
+            <h4>Chat about</h4> <h1>{{ room_name }}</h1>
+            <div class="boxed-content">
+                    <div id="message-list">
+                        {{ messages.username }}
+                        {% for message in messages %}
+                            {% if message.username == user.username %}
+                                <div class="message sent">
+                                    <span class="username">You</span>: {{ message.message }}
+                                </div>
+                            {% else %}
+                                <div class="message received">
+                                    <span class="username">{{ message.username }}</span>: {{ message.message }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+<p></p>
+                    <form method ="POST" enctype =" multipart/form-data" action="">{% csrf_token %} 
+                        <div class="chat-input">
+                            <button id="send-button">Send</button>
+                            <input type="text" id="message" name="message" placeholder="Type your message...">
+                            
+                        </div>
+                    </form>
+
+
+    
+<style>
+    .boxed-content {
+    width: 80%; /* 80%の横幅を持つ */
+    margin: 0 auto; /* 中央に配置するためのマージン設定 */
+    padding: 20px; /* 内部の余白を設定（必要に応じて調整） */
+    border: 1px solid #ccc; /* ボーダー設定（必要に応じて調整） */
+    border-radius: 5px; /* 角丸の設定（必要に応じて調整） */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* ボックスシャドウ（必要に応じて調整） */
+}
+
+
+/* Style chat messages */
+.message {
+    padding: 8px;
+    margin: 4px 0;
+    border-radius: 4px;
+}
+
+.message.sent {
+    background-color: #f8f9fa;
+    color: black;
+    text-align: right;
+}
+
+.message.received {
+    background-color: #f8f9fa;
+    text-align: left;
+}
+
+
+
+/* Style the chat messages container */
+.chat-messages {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Style the username */
+.username {
+    font-weight: bold;
+}
+
+/* Style chat input elements */
+.chat-input input, .chat-input button {
+    padding: 5px 10px;
+    text-align:left;
+    margin-left: 0 0 0 auto;
+    float: right;
+
+}
+
+
+#send-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+h1 {
+    text-decoration: underline;
+}
+
+/* Center-align content */
+
+</style>
+
+{% load static %} 
+
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "dream/base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="center-content">
+            <p><a href ="{% url 'dream:recruitment_list' %}">« Back </a ></p > 
+                <p>
+                    <h3>Let's create a new Recruitment!</h3>
+                    </p>
+                <div class ="card"> 
+                    <div class ="card-body">
+                        <div class="left-align" >
+                                <form method ="POST" enctype =" multipart/form-data">{% csrf_token %} 
+                                    <div class="left-align"style="text-align: left;"> 
+                                        <label class =" form-label" > title </label >
+                                        <input id="title" name="title" required="required" class="input-gray" aria-autocomplete="list" maxlength="20" placeholder="Please enter within 20 characters" style="width: 100%;">
+                                    </div>
+                                    <p></p>
+                                    <div class ="left-align">
+                                        <label class ="form-label"> Description </label > 
+                                            <textarea id="body" name="body" required="required" class="input-gray" aria-autocomplete="list" style="width: 100%;" rows="4" cols="50" placeholder="Please provide details for the new recruitment!"></textarea>
+                                    </div>
+                                    <p></p>
+                                    <div>
+                                        <label class ="form-label"> Adress </label > 
+                                            <input id="body" name="adress" required="required" class="input-gray" aria-autocomplete="list" style="width: 100%;" placeholder="Please enter a reachable phone number or email address!">
+                                    </div> 
+                                
+                                <div class="center-content">
+                                    <div class ="d-grid gap-2"> 
+                                        <button type ='submit' class ="btn btn-primary"> Register </button > 
+                                    </div> 
+                                </form > 
+                                </div>
+            </div> 
+         </div> 
+    </div> 
+</div> 
+<style>
+    .card {
+        width: 40%;
+    }
+
+    .left-align {
+    text-align: left;
+    width: 100%;
+    padding: 0; /* 上下左右の padding をゼロに設定 */
+    margin: 0; /* 上下左右の margin もゼロに設定 */
+    resize: none; 
+}
+.tarea{
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0.5em 0;
+    line-height: 1.5;
+    height: 6em;
+}
+.left-align-textarea {
+    width: 100%;
+    padding: 0; /* 上下左右の padding をゼロに設定 */
+    margin: 0; /* 上下左右の margin もゼロに設定 */
+    resize: none; /* ユーザーがリサイズできないようにする（任意） */
+}
+</style>
+{% endblock %}

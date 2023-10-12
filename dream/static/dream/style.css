@@ -1,0 +1,144 @@
+/* Reset some default styles */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(-135deg, #E4A972, #9941D8);
+}
+
+
+/* Style tables */
+table {
+    border-collapse: collapse;
+    width: 100%; /* Full width of the container */
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px; /* Add some spacing between tables */
+}
+
+table th {
+    padding: 10px; /* Add padding to table headers */
+    
+    background-color: black;
+    color: black; /* Optional: Change text color to white for better visibility */ 
+}
+
+table tr {
+
+    
+    background-color: black;
+    color: black; /* Optional: Change text color to white for better visibility *
+    
+}
+
+table td {
+    padding: 10px; /* Add padding to table cells */
+}
+
+/* Style links as buttons */
+.entry, .button, .delete_button {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.entry {
+    background-color: darkblue;
+}
+
+.button {
+    background-color: lightblue;
+    color: black;
+}
+
+.delete_button {
+    background-color: red;
+}
+
+/* Style flash messages */
+.flashMessage {
+    background-color: lightblue;
+    width: 50vw;
+    font-size: 24px; /* Specify a unit for font size (e.g., px) */
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* Add a custom class for info background color */
+.bg-info {
+    background-color: lightblue;
+}
+
+/* Style the message container */
+.message-container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+/* Style chat messages */
+.message {
+    padding: 8px;
+    margin: 4px 0;
+    border-radius: 4px;
+}
+
+.message.sent {
+    background-color: #28a745;
+    color: white;
+    text-align: right;
+}
+
+.message.received {
+    background-color: #f8f9fa;
+    text-align: left;
+}
+
+/* Style the chat container */
+.chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the chat messages container */
+.chat-messages {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Style the username */
+.username {
+    font-weight: bold;
+}
+
+/* Style chat input elements */
+.chat-input input, .chat-input button {
+    padding: 5px 10px;
+    margin-right: 10px;
+}
+
+#message {
+    width: 60%;
+}
+
+#send-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Center-align content */
+.center-content {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 400px;
+}

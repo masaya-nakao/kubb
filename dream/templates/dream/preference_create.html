@@ -1,0 +1,52 @@
+{% extends "dream/base.html" %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<div class="center-content">
+            <p><a href ="{% url 'dream:preference_list' %}">« Back </a ></p > 
+                <p>
+                <h3>Let's create a new Preference!</h3>
+                </p>
+           <div class ="card" > 
+                    <div class ="card-body"> 
+                              <div class="left-align" >
+                                        <form method ="POST" enctype =" multipart/form-data">{% csrf_token %} 
+                                            <div class="left-align"style="text-align: left;"> 
+                                                <label class =" form-label" > title: </label >
+                                                <input id="title" name="title" required="required" class="input-gray" aria-autocomplete="list" maxlength="20" placeholder="Please enter within 20 characters" style="width: 100%;">
+                                            
+                                            <p></p>
+                                                <label class ="form-label"> Introduction: </label > 
+                                                    <input id="body" name="body" required="required" class="input-gray" aria-autocomplete="list" maxlength="100" placeholder="Please enter within 100 characters" style="width: 100%;">
+                                                    <!-- {{ form.body | add_class:'form-control'}} -->
+                                            </div> 
+
+                                    </div>
+                                    <div class="center-content">
+                                            <div class ="d-grid gap-2"> 
+                                                <button type ='submit' class ="btn btn-primary"> Register </button > 
+                                            </div> 
+                                        </form > 
+                                    </div>
+                                        <p></p>
+                                </div > 
+                            </div>
+                    
+         
+    </div> 
+</div> 
+<style>
+    .input-gray{
+        width: 300px;
+        height: 40px;
+    }
+    .card {
+        width: 40%;
+    }
+
+    .left-align {
+    text-align: left;
+}
+</style>
+{% endblock %}

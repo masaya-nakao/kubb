@@ -1,0 +1,132 @@
+{% extends "dream/base.html" %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+                
+            <h3>
+                こんにちは, {{ user.username }}さん！
+            </h3>
+        {% endif %}
+<div class="center-content">
+        <h1>{{ title }}</h1>
+
+        {% if messages %}
+		    {% for message in messages %}
+			    <p class="flashMessage">{{ message }}</p>
+		    {% endfor %}
+        {% endif %}
+
+        <table>
+            <h1>Preference</h1>
+            {% if keyword %}
+                    <h4 class="mb-4">「search result of {{ keyword }}」</h4>
+            <tr>
+                <th>Title</th>
+            <tr>
+                <td><a href="{% url 'dream:preference_groupchat' room_name=keyword %}" >{{ keyword }}</a></td>
+            </tr>
+            {% endif %}
+            {% if error_message %}
+                <p class="flashMessage">{{ error_message }}</p>
+            {% endif %}
+            <tr class ="background-color">
+                <th>Title</th>
+                <th>Introduction</th>
+                <th>Create_data</th>
+                <th></th>
+            <tr>
+            {% for i in all_data %}
+            <tr>
+                <td><a href="{% url 'dream:preference_groupchat' room_name=i.title %}">{{ i.title }}</a></td>
+                <td>{{ i.body }}</td>
+                <td>{{ i.create_date }}
+                    <form action="{% url 'dream:preference_like' room_name=i.title %}" method="POST"></td>
+                <td>
+                        {% csrf_token %}
+                        <button type="submit" class="favorite_button">Add to Favorites</button>
+                    </form>
+                </td>
+            </tr> 
+            {% endfor %}
+            
+        </table>
+        <form method="get" action="{% url 'dream:preference_search' %}">
+            <input type="text" name="keyword" value="{{ keyword }}" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+        <p></p>
+        <p>if you want to create a new "Preference" → <a href="{% url 'dream:preference_create' %}" class="create-button">Create New!</a></p>
+               
+    </body>
+</div>
+<style>
+    .create-button{
+        text-decoration: none; background-color: #007BFF; color: white; padding: 5px 10px; border-radius: 5px;
+    }
+    .flashMessages {
+        margin-bottom: 20px;
+    }
+    
+    .flashMessage {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+    }
+    
+    h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    table {
+        width: 70%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+    }
+    
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border: 1.5px solid black;
+        vertical-align: middle;
+    }
+    td {
+        background-color: 	#DDDDDD;
+    }
+    
+    .linkButton, .deleteButton {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #007BFF;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    
+    .linkButton:hover, .deleteButton:hover {
+        background-color: #0056b3;
+    }
+.center-content h3 {
+text-decoration: underline;
+}
+.center-content h1 {
+text-align: left;
+}
+.favorite_button {
+float: right;
+}
+table h1 {
+text-align: left;
+margin-bottom: 10px; /* テキストとテーブルの間に余白を追加 */
+}
+table td, table th {
+    padding: 10px; /* 上下の余白を調整するための値（必要に応じて調整） */
+    vertical-align: middle;
+}
+</style>
+{% endblock %}

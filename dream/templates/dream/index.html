@@ -1,0 +1,125 @@
+{% extends "dream/base.html" %}
+{% block content %}
+{% if messages %}
+    <ul class="flashMessage">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+        {% if request.user.is_authenticated %}
+                
+            <h3>
+                こんにちは, {{ user.username }}さん！
+            </h3>
+        {% endif %}
+        <div class="center-content">
+            
+            <table>
+                <h1>Preference</h1>
+                <tr>
+                    <th>Title</th>                  
+                </tr>
+                    {% for i in preference %}
+                    <tr>
+                    
+                        <td><a href="{% url 'dream:preference_groupchat' room_name=i.title %}">{{ i.title }}</a>
+                        <a href="{% url 'dream:preference_like_delete' id=i.id %}" class="delete_button">delete</a></td>
+                    </tr>
+                    {% endfor %}
+            </table>
+
+            <table>
+                <h1>Agenda</h1>
+                <tr>
+                    <th>Title</th>
+                   
+                </tr>
+                
+                {% for i in agenda %}
+                <tr>
+                    <td><a href="{% url 'dream:agenda_groupchat' room_name=i.title %}">{{ i.title }}</a>
+                    <a href="{% url 'dream:agenda_like_delete' id=i.id %}" class="delete_button">delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        
+
+            <table>
+                <h1>Recruitment</h1>
+                <tr>
+                    <th>Title</th>
+                    
+                </tr>
+                {% for i in recruitment %}
+                <tr>
+                    <td><a href="{% url 'dream:detail' id=i.id %}">{{ i.title }}</a>
+                    <a href="{% url 'dream:recruitment_like_delete' id=i.id %}" class="delete_button">delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <style>
+            body {
+                    margin: 0;
+                    padding: 0;
+                    background:	#FFDEAD
+                }
+            .flashMessage {
+                margin-bottom: 20px;
+                background-color: #f2f2f2;
+                padding: 10px;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+            }
+        
+            
+            h1 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            
+            table {
+                width: 70%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            
+            th {
+                background-color: #f2f2f2;
+            }
+            
+            th, td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .linkButton, .deleteButton {
+                display: inline-block;
+                padding: 5px 10px;
+                background-color: #007BFF;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+            
+            .linkButton:hover, .deleteButton:hover {
+                background-color: #0056b3;
+            }
+        .center-content h3 {
+        text-decoration: underline;
+        }
+        .center-content h1 {
+        text-align: left;
+        }
+        .delete_button {
+        float: right;
+        }
+        table h1 {
+        text-align: left;
+        margin-bottom: 10px; /* テキストとテーブルの間に余白を追加 */
+        }
+        </style>
+{% endblock %}

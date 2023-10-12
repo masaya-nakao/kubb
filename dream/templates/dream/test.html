@@ -1,0 +1,73 @@
+       <!-- var body = document.getElementsByTagName("body");
+        body[0].classList.add("bg-info");
+        var messageForm = document.getElementById("message-form");
+        var messageInput = document.getElementById("message");
+        
+        messageForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            // メッセージ送信処理を実装すること
+            // サーバーサイドへメッセージを送信するAPIを呼び出すなど
+            
+            // メッセージ送信後、メッセージ入力欄をクリアする
+            messageInput.value = "";
+        });-->
+
+
+        // script.js
+        document.addEventListener("DOMContentLoaded", function() {
+            var messageForm = document.getElementById("message-form");
+            var messageInput = document.getElementById("message");
+            var messageList = document.getElementById("message-list");
+            
+            messageForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                var message = messageInput.value.trim();
+                if (message !== "") {
+                    // サーバーサイドへメッセージを送信する処理を追加する
+                    // 例えば、fetch APIを使ったPOSTリクエストなど
+                    // ここでは仮にメッセージを表示するだけの処理を行う
+                    displayMessage("sent", message);
+                    messageInput.value = "";
+                }
+            });
+            
+            function displayMessage(className, message) {
+                var messageElement = document.createElement("div");
+                messageElement.className = "message " + className;
+                messageElement.textContent = message;
+                messageList.appendChild(messageElement);
+                messageList.scrollTop = messageList.scrollHeight; // 自動スクロール
+            }
+        });
+              
+        <form id="message-form" method="POST" action="">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.message }}
+                <div class="py-3">
+                    <input id="message" name="message" required="required" class="input-gray" aria-autocomplete="list">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </main>
+    
+    {% load static %} 
+    
+    <script src="{% static 'js/script.js' %}"></script>
+    
+    
+    {% endblock %}
+
+
+                                                <!-- <div class ="mb-3"> 
+                                                <label class ="form-label" > tag </label > 
+                                                <input id="title" name="body" required="required" class="input-gray" aria-autocomplete="list"> -->
+                                                <!-- {{ form.tags | add_class:'form-control' }} --> 
+                                            <!-- <div class="mb-3">
+                                                <label class="form-label">No tags you want to register?</label> 
+                                                <input type="text" name="new_tag" class="form-control" id="id_new_tag" placeholder="create a tag">
+                                                        <small class="form-text text-muted">Separate multiple registrations with a space</small>
+                                            </div>
+                                        -->
