@@ -22,8 +22,7 @@ def login_view(request):
 
 
 def terms_view(request):
-    return render(request,'terms.html')
+    return render(request,'account/terms.html')
 
 
-def introduction_view(request):
-    return render(request,'introduction.html')
+

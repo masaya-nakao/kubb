@@ -448,4 +448,5 @@ def recruitment_like(request, room_name):
     return render(request, 'dream/recruitment_list.html',{'all_data':all_data })
 
 
-
+def introduction_view(request):
+    return render(request,'dream/introduction.html')

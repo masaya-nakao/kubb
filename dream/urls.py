@@ -27,4 +27,5 @@ urlpatterns = [
     path('<int:id>/agenda_like_delete/', views.agenda_like_delete, name='agenda_like_delete'),
     path('<int:id>/recruitment_like_delete/', views.recruitment_like_delete, name='recruitment_like_delete'),
     #path('<str:room_name>/profile/', views.profile, name='profile'),
+    path('introduction/',views.introduction_view,name='introduction'),
 ]

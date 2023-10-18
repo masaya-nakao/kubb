@@ -12,7 +12,7 @@
 <body>
 <header class="mb-4">
    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-       <a class="navbar-brand" href='{% url 'dream:index' %}'>KUBB</a>
+       <a class="navbar-brand" href="{% url 'dream:index' %}">KUBB</a>
        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
            <span class="navbar-toggler-icon"></span>
        </button>
@@ -51,7 +51,7 @@
 {% endblock content %}
 <footer id="footer">
     <p>Copyright (C) All Rights Reserved.</p>
-    <p>Please read <a href="{% url 'accounts:introduction' %}">introduction to Kubb</a></p>
+    <p>Please read <a href="{% url 'dream:introduction' %}">introduction to Kubb</a></p>
 </footer>
 <style>
     body {
