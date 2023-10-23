@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from django.urls import reverse_lazy
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,14 +23,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!pw06zm%y616!atf+=y0z8e6va-i&!@a2o)rslpiyf@rh3p+(1'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
 
+STATIC_ROOT = '/usr/share/nginx/html/static'
 
+# Amazon SES関連設定
+AWS_SES_ACCESS_KEY_ID = os.environ.get('AWS_SES_ACCESS_KEY_ID')
+AWS_SES_SECRET_ACCESS_KEY = os.environ.get('AWS_SES_SECRET_ACCESS_KEY')
+EMAIL_BACKEND = 'django_ses.SESBackend'
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +53,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'widget_tweaks',
+    
+    'django_ses',
 ]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
@@ -87,6 +96,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST':'',
+        'PORT': '',
     }
 }
 
@@ -125,7 +138,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -172,6 +187,10 @@ ACCOUNT_LOGOUT_ON_GET = True
 AUTH_USER_MODEL = 'accounts.CustomUser'
 ACCOUNT_USERNAME_REQUIRED = True
 
+#バックアップバッチ用
+BACKUP_PATH = 'backup/'
+NUM_SAVED_BACKUP = 30
+
 REST_SESSION_LOGIN = False
 OLD_PASSWORD_FIELD_ENABLED = False
 LOGOUT_ON_PASSWORD_CHANGE = False
@@ -179,3 +198,48 @@ LOGOUT_ON_PASSWORD_CHANGE = False
 LOGIN_ERROR_MESSAGE = "メールアドレスまたはパスワードが正しくありません"
 
 CSRF_COOKIE_SECURE = True
+
+# ロギング
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    # ロガーの設定
+    'loggers': {
+        # Djangoが利用するロガー
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+        },
+        # diaryアプリケーションが利用するロガー
+        'diary': {
+            'handlers': ['file'],
+            'level': 'INFO',
+        },
+    },
+
+    # ハンドラの設定
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/django.log'),
+            'formatter': 'prod',
+            'when': 'D',  # ログローテーション(新しいファイルへの切り替え)間隔の単位(D=日)
+            'interval': 1,  # ログローテーション間隔(1日単位)
+            'backupCount': 7,  # 保存しておくログファイル数
+        },
+    },
+
+    # フォーマッタの設定
+    'formatters': {
+        'prod': {
+            'format': '\t'.join([
+                '%(asctime)s',
+                '[%(levelname)s]',
+                '%(pathname)s(Line:%(lineno)d)',
+                '%(message)s'
+            ])
+        },
+    }
+}
