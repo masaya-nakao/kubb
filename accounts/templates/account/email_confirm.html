@@ -12,7 +12,8 @@
         <div class="mb-4">
             <h1>ユーザ確認</h1>
         </div>
-        <p>以下のボタンをクリックするとユーザ登録が完了します</p>
+        <p>ご登録ありがとうございます。</p>
+        <p>以下のボタンをクリックするとユーザ登録が完了します。</p>
         <form method="POST" action="{% url 'account_confirm_email' confirmation.key %}">
             {% csrf_token %}
             <div class='mt-3'>
