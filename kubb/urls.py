@@ -24,5 +24,6 @@ urlpatterns = [
     #path('dream', include('dream.urls')),
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('accounts.urls', )),
-    path('admin/', admin.site.urls),    
+    #path('admin/', admin.site.urls),
+    path('control/',admin.site.urls),    
 ]
