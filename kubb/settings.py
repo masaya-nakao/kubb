@@ -19,7 +19,7 @@ from .settings_common import *
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
 EMAIL_HOST = 'stmtp.gmail.com'
 EMAIL_PORT = 587
