@@ -9,21 +9,24 @@
                     </p>
                 <div class ="card"> 
                     <div class ="card-body">
-                        <div class="left-align" >
+                        <div class="left-align">
+                            {% if error_message %}
+                                    <p style="color: red;">{{ error_message }}</p>
+                            {% endif %}
                                 <form method ="POST" enctype =" multipart/form-data">{% csrf_token %} 
                                     <div class="left-align"style="text-align: left;"> 
                                         <label class =" form-label" > title </label >
-                                        <input id="title" name="title" required="required" class="input-gray" aria-autocomplete="list" maxlength="20" placeholder="Please enter within 20 characters" style="width: 100%;">
+                                        <input id="title" name="title" required="required" class="input-gray" aria-autocomplete="list" maxlength="40" placeholder="Please enter within 20 characters" style="width: 100%;">
                                     </div>
                                     <p></p>
                                     <div class ="left-align">
                                         <label class ="form-label"> Description </label > 
-                                            <textarea id="body" name="body" required="required" class="input-gray" aria-autocomplete="list" style="width: 100%;" rows="4" cols="50" placeholder="Please provide details for the new recruitment!"></textarea>
+                                            <textarea id="body" name="body" required="required" class="input-gray" aria-autocomplete="list" style="width: 100%;" rows="4" cols="50" maxlength="800" placeholder="Please provide details for the new recruitment!"></textarea>
                                     </div>
                                     <p></p>
                                     <div>
                                         <label class ="form-label"> Adress </label > 
-                                            <input id="body" name="adress" required="required" class="input-gray" aria-autocomplete="list" style="width: 100%;" placeholder="Please enter a reachable phone number or email address!">
+                                            <input id="body" name="adress" required="required" class="input-gray" aria-autocomplete="list" style="width: 100%;" maxlength="50"placeholder="Please enter a reachable phone number or email address!">
                                     </div> 
                                 
                                 <div class="center-content">

@@ -1,12 +1,6 @@
 {% extends "dream/base.html" %}
 {% block content %}
-{% if messages %}
-    <ul class="flashMessage">
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    </ul>
-{% endif %}
+
 
         {% if request.user.is_authenticated %}
                 
@@ -14,6 +8,14 @@
                 こんにちは, {{ user.username }}さん！
             </h3>
         {% endif %}
+        {% if messages %}
+    <ul class="flashMessage">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </ul>
+{% endif %}
+    <div class="gray-box">
         <div class="center-content">
             
             <table>
@@ -54,13 +56,17 @@
                 </tr>
                 {% for i in recruitment %}
                 <tr>
-                    <td><a href="{% url 'dream:detail' id=i.id %}">{{ i.title }}</a>
+                    <td><a href="{% url 'dream:detail' title=i.title %}">{{ i.title }}</a>
                     <a href="{% url 'dream:recruitment_like_delete' id=i.id %}" class="delete_button">delete</a></td>
                 </tr>
                 {% endfor %}
             </table>
         </div>
+    </div>
         <style>
+            .gray-box {
+    margin-bottom: 80px; 
+        } 
             body {
                     margin: 0;
                     padding: 0;
