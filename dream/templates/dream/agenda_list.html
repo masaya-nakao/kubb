@@ -1,65 +1,72 @@
 {% extends "dream/base.html" %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
+{% if request.user.is_authenticated %}         
+            <h3>   こんにちは, {{ user.username }}さん！</h3>
+{% endif %}
+<div class="gray-box">
+        <div class="center-content">
+            <span class="create">if you want to create a new "Agenda" → <a href="{% url 'dream:agenda_create' %}" class="create-button">Create New!</a></span>
+               
+                <p></p>
+                <form method="get" action="{% url 'dream:agenda_search' %}">
+                    <input type="text" name="keyword" value="{{ keyword }}" required placeholder="Search...">
+                    <button type="submit">Search</button>
+                </form>
+                <p></p>
+
+                <table>
+                    
+                    {% if keyword %}
+                        <h4 class="mb-4">Search result of "{{ keyword }}" →
+                        {% if queryset == "a" %}
+                        {{ error_message }}
+                        {% else %}
+                        <a href="{% url 'dream:agenda_groupchat' room_name=keyword %}" >{{ keyword }}</a>
+                        {% endif %}
+                        </h4>
+                    {% endif %}
+                    <h1>agenda</h1>
+                    <tr class ="background-color">
+                        <th>Title</th>
+                        <th style="width: 600px;">Introduction</th>
+                        <th style="width: 130px;">Create_data</th>
+                        <th style="width: 60px;"></th>
+                    <tr>
+                    {% for i in all_data %}
+                    <tr>
+                        <td><a href="{% url 'dream:agenda_groupchat' room_name=i.title %}">{{ i.title }}</a></td>
+                        <td><span id="word-break-word">{{ i.body }}</td></span>
+                        <td>{{ i.create_date }}
+                            <form action="{% url 'dream:agenda_like' room_name=i.title %}" method="POST"></td>
+                        <td>
+                                {% csrf_token %}
+                                <button type="submit" class="favorite_button">Add to Favorites</button>
+                            </form>
+                        </td>
+                    </tr> 
+                    {% endfor %}
+                    
+                </table>
                 
-            <h3>
-                こんにちは, {{ user.username }}さん！
-            </h3>
-        {% endif %}
-<div class="center-content">
-        <h1>{{ title }}</h1>
-
-        {% if messages %}
-		    {% for message in messages %}
-			    <p class="flashMessage">{{ message }}</p>
-		    {% endfor %}
-        {% endif %}
-
-        <table>
-            <h1>Agenda</h1>
-            {% if keyword %}
-                    <h4 class="mb-4">「search result of {{ keyword }}」</h4>
-            <tr>
-                <th>Title</th>
-            </tr>
-            <tr>
-                <td><a href="{% url 'dream:agenda_groupchat' room_name=keyword %}" >{{ keyword }}</a></td>
-            </tr>
-            {% endif %}
-            {% if error_message %}
-                <p class="flashMessage">{{ error_message }}</p>
-            {% endif %}
-            <tr>
-                <th>Title</th>
-                <th>Introduction</th>
-                <th>Create_data</th>
-                <th></th>
-            <tr>
-            {% for i in all_data %}
-            <tr>
-                <td><a href="{% url 'dream:agenda_groupchat' room_name=i.title %}" >{{ i.title }}</a></td>
-                <td>{{ i.body }}</td>
-                <td>{{ i.create_date }}</td>
-                <td>
-                    <form action="{% url 'dream:agenda_like' room_name=i.title %}" method="POST">
-                    {% csrf_token %}
-                        <button type="submit" class="favorite_button">Add to Favorites</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        <form method="get" action="{% url 'dream:agenda_search' %}">
-            <input type="text" name="keyword" value="{{ keyword }}" placeholder="Search...">
-            <button type="submit">Search</button>
-        </form>
-        <p></p>
-        <p>if you want to create a new "Agenda" → <a href="{% url 'dream:agenda_create' %}" class="create-button">Create New!</a></p>
-  
-    </body>
+                <p></p>
+        
+                    
+            </body>
+        </div>
 </div>
 <style>
+h4{
+    background-color: rgba(245, 245, 245, 0.7); 
+    text-decoration: underline;
+}
+.gray-box {
+    margin-bottom: 80px; 
+        } 
+
+    .create{
+        background-color: rgba(245, 245, 245, 0.7); 
+    }
     .create-button{
         text-decoration: none; background-color: #007BFF; color: white; padding: 5px 10px; border-radius: 5px;
     }
@@ -88,12 +95,12 @@
     th {
         background-color: #f2f2f2;
     }
+    
     th, td {
         padding: 10px;
         text-align: left;
         border: 1.5px solid black;
         vertical-align: middle;
-
     }
     td {
         background-color: 	#DDDDDD;
@@ -108,6 +115,9 @@
         border-radius: 5px;
     }
     
+    .linkButton:hover, .deleteButton:hover {
+        background-color: #0056b3;
+    }
 .center-content h3 {
 text-decoration: underline;
 }
@@ -124,6 +134,9 @@ margin-bottom: 10px; /* テキストとテーブルの間に余白を追加 */
 table td, table th {
     padding: 10px; /* 上下の余白を調整するための値（必要に応じて調整） */
     vertical-align: middle;
+}
+#word-break-word{
+    word-break: anywhere;
 }
 </style>
 {% endblock %}

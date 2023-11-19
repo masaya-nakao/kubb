@@ -33,51 +33,86 @@
 -->
 {% block content %}
 <div class="center-content">
-            <h4>Chat about</h4> <h1>{{ room_name }}</h1>
-            <div class="boxed-content">
-                    <div id="message-list">
-                        {{ messages.username }}
-                        {% for message in messages %}
-                            {% if message.username == user.username %}
-                                <div class="message sent">
-                                    <span class="username">You</span>: {{ message.message }}
-                                </div>
-                            {% else %}
-                                <div class="message received">
-                                    <span class="username">{{ message.username }}</span>: {{ message.message }}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
+    <h4>Chat about</h4> <h1>{{ room_name }}</h1>
+    <div id="messages" class="boxed-content">
+            <div id="message-list" class="chat-messages">
+                {{ messages.username }}
+                {% for message in messages %}
+                    {% if message.username == user.username %}
+                        <div class="message sent">
+                            <span class="timestamp">{{ message.timestamp }}</span>
+                            <span class="username">You</span>: <div id="body-message" class="overflow-wrap">{{ message.message }}</div>
+                        </div>
+                    {% else %}
+                        <div class="message received">
+                            <span class="username">{{ message.username }}</span> <span class="timestamp">{{ message.timestamp }}</span>:  <div id="body-message" class="overflow-wrap">{{ message.message }}</div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+    </div>
 
 <p></p>
-                    <form method ="POST" enctype =" multipart/form-data" action="">{% csrf_token %} 
-                        <div class="chat-input">
-                            <button id="send-button">Send</button>
-                            <input type="text" id="message" name="message" placeholder="Type your message...">
+            <form method ="POST" enctype =" multipart/form-data" action="">{% csrf_token %} 
+                    <div class="chat-input">
                             
-                        </div>
-                    </form>
+                            <textarea id="message" name="message" maxlength="400" placeholder="Type your message..."></textarea>
+                            <button id="send-button">Send</button>
+                    </div> 
+            </form>
+</div>
 
 
-    
 <style>
-    .boxed-content {
+.boxed-content {
     width: 80%; /* 80%の横幅を持つ */
     margin: 0 auto; /* 中央に配置するためのマージン設定 */
-    padding: 20px; /* 内部の余白を設定（必要に応じて調整） */
+    padding: 10px; /* 内部の余白を設定（必要に応じて調整） */
     border: 1px solid #ccc; /* ボーダー設定（必要に応じて調整） */
     border-radius: 5px; /* 角丸の設定（必要に応じて調整） */
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* ボックスシャドウ（必要に応じて調整） */
+     /* 縦方向にスクロールできるように設定 */
+     /* 制限を取り除くか、適切な高さに調整 */
+     /* ビューポートの高さに対して100%に設定 */
+     overflow-y: auto;
+    max-height: 500px;
+   
+    /* 余白も含めた全体の高さが100vhになるようにボックスモデルを変更 */
+    box-sizing: border-box;
 }
+.chat-messages {
 
+        border: 1px solid #ddd;
+        padding: 1px;
+        margin-bottom: 1px;
+    }
+.message.sent span.timestamp {
+    font-size: 0.8em; /* 小さな文字サイズ */
+    color: #888; /* グレーの色 */
+    font-weight: lighter; /* 薄い文字にする */
 
+}
+.message.sent span.overflow-wrap{
+    overflow-wrap: anywhere;
+    text-align: left;
+    white-space: pre-wrap;
+}
+.message.received span.overflow-wrap{
+    overflow-wrap: anywhere;
+    text-align: left;
+    white-space: pre-wrap;
+}
+.message.received span.timestamp {
+    font-size: 0.8em; /* 小さな文字サイズ */
+    color: #888; /* グレーの色 */
+    font-weight: lighter; /* 薄い文字にする */
+
+}
 /* Style chat messages */
 .message {
-    padding: 8px;
-    margin: 4px 0;
-    border-radius: 4px;
+    padding: 2px;
+    margin: 1px 0;
+    border-radius: 1px;
 }
 
 .message.sent {
@@ -92,16 +127,6 @@
 }
 
 
-
-/* Style the chat messages container */
-.chat-messages {
-    height: 300px;
-    overflow-y: scroll;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
 /* Style the username */
 .username {
     font-weight: bold;
@@ -113,9 +138,13 @@
     text-align:left;
     margin-left: 0 0 0 auto;
     float: right;
+    resize: vertical;
 
 }
-
+#body-message{
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
 
 #send-button {
     background-color: #3498db;
@@ -131,8 +160,28 @@ h1 {
 /* Center-align content */
 
 </style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var messageList = document.getElementById('messages');
+    messageList.scrollTop = messageList.scrollHeight;
+});
+document.addEventListener('DOMContentLoaded', function() {
+    var inputText = document.getElementById('body-message');
+    var outputText = inputText.replace(/\n/g, '<br>');
+    document.getElementById('body-message').innerHTML = outputText;
+});
+document.getElementById('send-button').addEventListener('click', function () {
+        // テキストエリアの値を取得
+        var inputText = document.getElementById('message').value;
 
-{% load static %} 
+        // スペースがあれば改行に変換
+        var newText = inputText.replace(/[\s ]+/g, '\n');
 
-<script src="{% static 'js/script.js' %}"></script>
+        // 改行が含まれる場合、テキストエリアの値を更新
+        if (newText !== inputText) {
+            document.getElementById('message').value = newText;
+        }
+    });
+</script>
+
 {% endblock %}

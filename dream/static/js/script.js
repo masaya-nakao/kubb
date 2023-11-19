@@ -29,4 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
         var data = 'username=' + encodeURIComponent(username) + '&message=' + encodeURIComponent(message);
         xhr.send(data);
     }
+    document.addEventListener('DOMContentLoaded', function() {
+        var messageList = document.getElementById('message-list');
+        messageList.scrollTop = messageList.scrollHeight;
+    });
 });

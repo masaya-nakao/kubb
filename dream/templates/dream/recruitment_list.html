@@ -2,60 +2,67 @@
 
 {% block content %}
 {% if request.user.is_authenticated %}
-                
+        <div class="greeting">   
             <h3>
-                こんにちは, {{ user.username }}さん！
+                   こんにちは, {{ user.username }}さん！
             </h3>
+        </div>  
         {% endif %}
-<div class="center-content">
-        <h1>{{ title }}</h1>
+<div class="gray-box">
+    <div class="center-content">
+        <span class="create">if you want to create a new "Recruitment" → <a href="{% url 'dream:recruitment_create' %}" class="create-button">Create New!</a></span>
+            <p></p>
+            <form method="get" action="{% url 'dream:recruitment_search' %}">
+                <input type="text" name="keyword" value="{{ keyword }}" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+           <table>
+                {% if keyword %}
+                <h4 class="mb-4">search result of "{{ keyword }}" →
+                {% if queryset == "a" %}
+                        {{ error_message }}
+                {% else %}
+                        <a href="{% url 'dream:detail' title=keyword %}" >{{ keyword }}</a>
+                {% endif %}
+                </h4>
+                {% endif %}
+                <h1>Recruitment</h1>
+                <tr>
+                    <th>Title</th>
+                    <th style="width: 130px;">Create_data</th>
+                    <th style="width: 60px;"></th>
+                <tr>
 
-        {% if messages %}
-		    {% for message in messages %}
-			    <p class="flashMessage">{{ message }}</p>
-		    {% endfor %}
-        {% endif %}
-
-        <table>
-            <h1>Recruitment</h1>
-            {% if keyword %}
-                    <h4 class="mb-4">「search result of {{ keyword }}」</h4>
-            <tr>
-                <th>Title</th>
-            </tr>
-            <tr>
-                <td><a href="{% url 'dream:recruitment_groupchat' room_name=keyword %}" >{{ keyword }}</a></td>
-            </tr>
-            {% endif %}
-            {% if error_message %}
-                <p class="flashMessage">{{ error_message }}</p>
-            {% endif %}
-            <tr>
-                <th>Title</th>
-                <th>Create_data</th>
-                <th></th>
-            <tr>
-
-            {% for i in all_data %}
-            <tr>
-                <td><a href="{% url 'dream:detail' id=i.id %}" >{{ i.title }}</a></td>
-                <td>{{ i.create_date }}</td>
-                <td><form action="{% url 'dream:recruitment_like' room_name=i.title %}" method="POST">
-                    {% csrf_token %}
-                        <button type="submit" class="favorite_button">Add to Favorites</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        <form method="get" action="{% url 'dream:recruitment_search' %}">
-            <input type="text" name="keyword" value="{{ keyword }}" placeholder="Search...">
-            <button type="submit">Search</button>
-        </form>
-        <p></p>
-        <p>if you want to create a new "Recruitment" → <a href="{% url 'dream:recruitment_create' %}" class="create-button">Create New!</a></p>
+                {% for i in all_data %}
+                <tr>
+                    <td><a href="{% url 'dream:detail' title=i.title %}" >{{ i.title }}</a></td>
+                    <td>{{ i.create_date }}</td>
+                    <td><form action="{% url 'dream:recruitment_like' room_name=i.title %}" method="POST">
+                        {% csrf_token %}
+                            <button type="submit" class="favorite_button">Add to Favorites</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+            <p></p>
+    </div>
 </div>
 <style>
+    .greeting{
+    width:100%;    
+    }
+
+    h3{
+        width:80%;
+    }
+    .gray-box {
+    margin-bottom: 80px; 
+        } 
+    .create{
+        background-color: rgba(245, 245, 245, 0.7); 
+    }
     .create-button{
         text-decoration: none; background-color: #007BFF; color: white; padding: 5px 10px; border-radius: 5px;
     }
