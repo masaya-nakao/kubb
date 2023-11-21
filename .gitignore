@@ -2,3 +2,4 @@
 kubb/settings_dev.py
 kubb/settings.html
 requirements.txt
+venv
