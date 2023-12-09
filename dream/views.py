@@ -564,3 +564,6 @@ def recruitment_like(request, room_name):
 
 def introduction_view(request):
     return render(request,'dream/introduction.html')
+
+def terms_view(request):
+    return render(request,'account/terms.html')

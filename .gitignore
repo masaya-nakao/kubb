@@ -3,3 +3,6 @@ kubb/settings_dev.py
 kubb/settings.html
 requirements.txt
 venv
+.env
+kubb/settings_1203.html
+kubb/settings_1205.html

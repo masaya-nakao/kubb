@@ -1,0 +1,145 @@
+
+{% extends "dream/base.html" %}
+{% block content %}
+<div class="login">
+            <div class="center-content">
+              <div class ="card"> 
+                <div class ="card-body"> 
+                      <h1>Sign Up</h1>
+                        <div class="login-container">
+                          <form method="post" action="{% url 'account_signup' %}">
+                            {% csrf_token %}
+                                
+                                  <!--<input type="hidden" name="csrfmiddlewaretoken" value="ladrWbqBDbSRw1UzfToHyB7tOXMrssbDTpHDM52NWcm0XVViksz6jxrNubychhTR"> -->
+                                  <p>
+                                  <label for="id_username">Username:</label>
+                                  <input type="text" name="username" placeholder="Please enter between 8 and 30 characters." autocomplete="username" minlength="8" maxlength="30" required id="id_username">
+                                  <p><span style="color: red;">Username cannot be changed, so please be careful.</span></p>
+      
+                                  </p>
+
+                                  <p>
+                                  <label for="id_email">E-mail address:
+                                        <span data-v-3517dff2 class="label-gray-small">KUMOI adress </span></label>
+                                  <input type="email" name="email"  autocomplete="email" pattern=".+@st.kyoto-u.ac.jp" placeholder="+@st.kyoto-u.ac.jp" required id="id_email">
+                                  </p>
+                                  <p>
+                                  <label for="id_password1">Password:
+                                        <span data-v-3517dff2 class="label-gray-small">At least 8 characters</span>
+                                  </label>
+                                  <input type="password" name="password1" placeholder="Password" autocomplete="new-password" minlength="8" required id="id_password1">
+                                  </p>
+                                  <p>
+                                    <label for="id_password2">Confirm Password:</label>
+                                  <input type="password" name="password2" placeholder="Confirm Password" autocomplete="new-password" required id="id_password2">
+                                  </p>
+                                  {% if redirect_field_value %}
+                                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                                  {% endif %}
+                                  <button type="submit" class="btn btn-secondary">Register</button>
+                          </form>
+
+                            <p> <a href="/accounts/login/">If you already have an account, please log in here!!</a></p>
+                          
+                        </div>
+                        <div>
+                          <p>By registering, you are deemed to have agreed to the following terms and conditions</p>
+                          <p><a class="btn btn-secondary" href="{% url 'dream:terms' %}">Terms of Service</a></p>
+                        </div>                        
+                  </div>
+              </div>
+            </div>
+      </div>
+<style>
+  .login{
+    margin-bottom: 80px; 
+  }
+      .card {
+        width: 60%;
+    }
+.login-container {
+background: #ebebeb;
+padding: 12px;
+}
+
+/* Every row inside .login-container is defined with p tags */
+.login p {
+padding: 12px;
+}
+
+form {
+padding: 0 1.5em;
+}
+
+.form-item {
+margin-bottom: 0.75em;
+width: 100%;
+}
+
+.form-item input {
+background: #fafafa;
+border: none;
+border-bottom: 2px solid #e9e9e9;
+color: #666;
+font-family: 'Open Sans', sans-serif;
+font-size: 1em;
+height: 50px;
+transition: border-color 0.3s;
+width: 100%;
+}
+
+.form-item input:focus {
+border-bottom: 2px solid #c0c0c0;
+outline: none;
+}
+.login p {
+padding: 12px;
+}
+
+.login input {
+box-sizing: border-box;
+display: block;
+width: 100%;
+border-width: 1px;
+border-style: solid;
+padding: 16px;
+outline: 0;
+font-family: inherit;
+font-size: 0.95em;
+}
+
+.login input[type="email"],
+.login input[type="password"] {
+background: #fff;
+border-color: #bbb;
+color: #555;
+}
+
+/* Text fields' focus effect */
+.login input[type="email"]:focus,
+.login input[type="password"]:focus {
+border-color: #888;
+}
+
+.login input[type="submit"] {
+background: #28d;
+border-color: transparent;
+color: #fff;
+cursor: pointer;
+}
+
+.login input[type="submit"]:hover {
+background: #17c;
+}
+
+/* Buttons' focus effect */
+.login input[type="submit"]:focus {
+border-color: #05a;
+}
+
+
+
+.login h1 { color: #666666;  letter-spacing:1px; text-align:center; }
+</style>
+{% endblock %}
+

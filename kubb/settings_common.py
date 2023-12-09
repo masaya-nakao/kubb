@@ -27,10 +27,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     
-    'django_ses',
+    'django_ses'
 ]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -39,14 +40,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    #'allauth.account.middleware.AccountMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'kubb.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+         'DIRS': [],
+        #'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +75,7 @@ WSGI_APPLICATION = 'kubb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'kubb_database',
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST':'',
@@ -118,7 +124,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
+ACCOUNT_FORMS = {
+    'signup': 'accounts.forms.CustomSignupForm',
+    'login': 'accounts.forms.CustomLoginForm',
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -137,14 +146,20 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # django-allauthで利用するdjango.contrib.sitesを使うためにサイト識別用IDを設定
 SITE_ID = 1
 
+#認証バックエンド-ログイン時に何でログインするかを配列の先頭から順に認証する
 AUTHENTICATION_BACKENDS = (
-    'allauth.account.auth_backends.AuthenticationBackend',  # 一般ユーザー用(メールアドレス認証)
-    'django.contrib.auth.backends.ModelBackend',  # 管理サイト用(ユーザー名認証)
+    #メールアドレス認証
+    'allauth.account.auth_backends.AuthenticationBackend',
+    #ユーザー名認証
+    'django.contrib.auth.backends.ModelBackend',
 )
+
 
 # メールアドレス認証に変更する設定
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+
+
 
 # サインアップにメールアドレス確認をはさむよう設定
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
@@ -152,6 +167,13 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Your Prefix Here'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
+DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+
+# 実際にメールを送信
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
 # ログイン/ログアウト後の遷移先を設定
 LOGIN_REDIRECT_URL = 'dream:index'
 ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy('account_login')
