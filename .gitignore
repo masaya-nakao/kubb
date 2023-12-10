@@ -6,3 +6,4 @@ venv
 .env
 kubb/settings_1203.html
 kubb/settings_1205.html
+db.sqlite3
