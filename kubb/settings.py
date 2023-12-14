@@ -62,8 +62,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 DEBUG = False
 
 # 許可するホスト名のリスト
-#ALLOWED_HOSTS = ['54.238.176.240', 'localhost', '127.0.0.1']
-ALLOWED_HOSTS = ['kubbku.net', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
 
 # ロギング
 LOGGING = {

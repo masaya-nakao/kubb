@@ -10,11 +10,7 @@
             <!-- <form method="post" action="/accounts/login/"> -->
             <form method="post" class="login-container"  action="/accounts/login/">{% csrf_token %}
               {{ form.as_p }}<button type="submit" >Login</button>
-                {% if form.errors %}
-                <p>
-                  <font data-v-27f851c8 size="3" color="red">ユーザー名またはパスワードが間違っています。もう一度入力してください。 </font> 
-                </p>
-                {% endif %}
+                
               
                 <!--
                 {% if redirect_field_value %}
@@ -36,6 +32,10 @@
     </div>
   </div>
   <style>
+      ul.errorlist {
+        list-style-type: none;
+        color: red;
+    }
     .login{
     margin-bottom: 80px; 
   }
