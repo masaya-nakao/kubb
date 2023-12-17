@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     
-    'django_ses'
+    'django_ses',
 ]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
