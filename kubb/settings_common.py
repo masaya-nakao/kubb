@@ -169,7 +169,7 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
 DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
 EMAIL_PORT = 587
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'email-smtp.ap-northeast-1.amazonaws.com'
 
 # 実際にメールを送信
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -184,8 +184,6 @@ ACCOUNT_LOGOUT_ON_GET = True
 # django-allauthが送信するメールの件名に自動付与される接頭辞をブランクにする設定
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
 
-# デフォルトのメール送信元を設定
-DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
 
 # バックアップバッチ用
 BACKUP_PATH = 'backup/'
