@@ -169,7 +169,7 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
 DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
 EMAIL_PORT = 587
-EMAIL_HOST = 'email-smtp.ap-northeast-1.amazonaws.com'
+EMAIL_HOST = 'smtp.gmail.com'
 
 # 実際にメールを送信
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

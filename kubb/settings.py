@@ -53,9 +53,9 @@ AWS_SES_REGION_NAME = 'ap-northeast-1'
 AWS_SES_REGION_ENDPOINT = 'email.ap-northeast-1.amazonaws.com'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
-EMAIL_USE_TLS = True
 
 
+EMAIL_HOST_USER = os.environ.get('FROM_EMAIL')
 # デフォルトのメール送信元を設定
 DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
